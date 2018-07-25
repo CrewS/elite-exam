@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Table, Input, Icon, Breadcrumb, Checkbox } from 'antd';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import axios from 'axios';
 import './index.scss';
 export default class SelectQuestion extends Component {
     state = {
@@ -18,6 +19,13 @@ export default class SelectQuestion extends Component {
     }
     componentDidMount() {
         this.getList('a');
+        axios.get('/user?ID=12345')
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
     getList = (chapter) => {
         let tmp = new Array(10).fill(0);
@@ -103,6 +111,7 @@ export default class SelectQuestion extends Component {
         const columns = [{
             title: '全选本页',
             dataIndex: 'name',
+            // eslint-disable-next-line 
             render: text => <a href="javascript:;">{text}</a>,
           }, {
             title: '单选题',

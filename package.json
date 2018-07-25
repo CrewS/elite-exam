@@ -105,6 +105,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-plugin-import": "^1.8.0",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3"
