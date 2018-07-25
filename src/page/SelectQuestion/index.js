@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Table, Input, Icon, Breadcrumb, Checkbox } from 'antd';
+import { Table, Input, Icon, Breadcrumb } from 'antd';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import axios from 'axios';
@@ -95,10 +95,10 @@ export default class SelectQuestion extends Component {
     // }]
   }
   render() {
-    const { questionList, active, chapters, activeChapter } = this.state;
-    const CheckboxGroup = Checkbox.Group;
+    const { questionList, activeChapter } = this.state;
+    // const CheckboxGroup = Checkbox.Group;
     let plainOptions = questionList.map((data) => {
-      if (data.chapter == activeChapter) {
+      if (data.chapter === activeChapter) {
         return {
           label: data.name, value: data.id
         }
@@ -129,56 +129,6 @@ export default class SelectQuestion extends Component {
       title: '填空题',
       dataIndex: 'completion',
     },
-    ];
-    const data = [
-      {
-        key: '1',
-        name: 'John Brown',
-        radio: 32,
-        multiple: 'New York No. 1 Lake Park',
-        checking: 32,
-        completion: 32,
-      },
-      {
-        key: '2',
-        name: 'John Brown',
-        radio: 32,
-        multiple: 'New York No. 1 Lake Park',
-        checking: 32,
-        completion: 32,
-      },
-      {
-        key: '3',
-        name: 'John Brown',
-        radio: 32,
-        multiple: 'New York No. 1 Lake Park',
-        checking: 32,
-        completion: 32,
-      },
-      {
-        key: '4',
-        name: 'John Brown',
-        radio: 32,
-        multiple: 'New York No. 1 Lake Park',
-        checking: 32,
-        completion: 32,
-      },
-      {
-        key: '5',
-        name: 'John Brown',
-        radio: 32,
-        multiple: 'New York No. 1 Lake Park',
-        checking: 32,
-        completion: 32,
-      },
-      {
-        key: '6',
-        name: 'John Brown',
-        radio: 32,
-        multiple: 'New York No. 1 Lake Park',
-        checking: 32,
-        completion: 32,
-      },
     ];
 
     // rowSelection object indicates the need for row selection
