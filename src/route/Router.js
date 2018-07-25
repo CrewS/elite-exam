@@ -7,13 +7,13 @@ import SelectQuestion from '../page/SelectQuestion';
 
 
 export default class Main extends Component {
-    render(){
-        return(<main>
-            <Switch>
-              <Route exact path='/' component={Home}/>
-              <Route path='/roster' component={Roster}/>
-              <Route path='/question' component={SelectQuestion}/>
-            </Switch>
-          </main>)
-    }
+  render() {
+    return (<main>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/roster' component={Roster} />
+        <Route path='/question' component={SelectQuestion} />
+      </Switch>
+    </main>)
+  }
 }
