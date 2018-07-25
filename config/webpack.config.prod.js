@@ -166,7 +166,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.scss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -205,7 +205,9 @@ module.exports = {
                         ],
                       },
                     },
+                    'sass-loader'
                   ],
+                  
                 },
                 extractTextPluginOptions
               )
@@ -216,17 +218,45 @@ module.exports = {
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
-          {
-            test: /\.scss$/,
-            loaders: ['style-loader', 'css-loader', 'sass-loader'],
-          },
+          // 编译scss 打包css文件
+          // {
+          //   test: /\.scss$/,
+          //   use: ExtractTextPlugin.extract({
+          //     fallback: 'style-loader',
+          //     //resolve-url-loader may be chained before sass-loader if necessary
+          //     use: [
+          //       'css-loader',
+          //       {
+          //         loader: require.resolve('postcss-loader'),
+          //         options: {
+          //           // Necessary for external CSS imports to work
+          //           // https://github.com/facebookincubator/create-react-app/issues/2677
+          //           ident: 'postcss',
+          //           plugins: () => [
+          //             require('postcss-flexbugs-fixes'),
+          //             autoprefixer({
+          //               browsers: [
+          //                 '>1%',
+          //                 'last 4 versions',
+          //                 'Firefox ESR',
+          //                 'not ie < 9', // React doesn't support IE8 anyway
+          //               ],
+          //               flexbox: 'no-2009',
+          //             }),
+          //           ],
+          //         },
+          //       },
+          //       'sass-loader'
+          //     ]
+          //   })
+          // },
           {
             loader: require.resolve('file-loader'),
             // Exclude `js` files to keep "css" loader working as it injects
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
