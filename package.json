@@ -90,12 +90,22 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "transform-runtime",
+      [
+        "import",
+        {
+          "libraryName": "antd"
+        }
+      ]
     ]
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.8.0",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3"
   }
