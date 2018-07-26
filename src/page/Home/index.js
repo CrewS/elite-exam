@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Icon } from 'antd';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -8,10 +8,6 @@ import $ from "jquery";
 class HomeContainer extends React.Component { 
   state={ 
 
-  }
-
-  constructor(props) {
-    super(props);
   }
 
   componentDidMount() {
