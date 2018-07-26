@@ -6,8 +6,8 @@ import Router from './route/Router';
 // import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-    <HashRouter>
-        <Router />
-    </HashRouter>,
-    document.getElementById('root'));
+  <HashRouter>
+    <Router />
+  </HashRouter>,
+  document.getElementById('root'));
 // registerServiceWorker();

@@ -6,8 +6,8 @@ import Sidebar from '../../components/Sidebar';
 import ChoosePaperType from '../../components/ChoosePaperType';
 import './index.scss';
 import $ from "jquery";
-class ManageContainer extends React.Component { 
-  state={ 
+class ManageContainer extends React.Component {
+  state={
     loading: false,
     visible: false,
     list: [
@@ -153,7 +153,7 @@ class ManageContainer extends React.Component {
     pageSize: 10,
   }
 
-  
+
   componentDidMount() {
   }
 
@@ -236,7 +236,7 @@ class ManageContainer extends React.Component {
         render: (text, record, index) => (
           <span>
             {
-              record.is_creator ? 
+              record.is_creator ?
                 <span>
                   <Tooltip title="编辑">
                     <Icon type="edit" className="icon-blue" style={{fontSize:'16px'}} />
@@ -261,7 +261,7 @@ class ManageContainer extends React.Component {
     ];
 
     return (
-      <div style={{width:'100%',display:'flex',display:'-webkit-flex'}}>
+      <div className="displayFlx">
         <Sidebar active="manage" />
         <div className="text-right-left">
           <Breadcrumb>
@@ -282,7 +282,7 @@ class ManageContainer extends React.Component {
             pagination={false}
             size="small"
             loading={this.state.loading}
-            title={() => 
+            title={() =>
               <div>
                 <Button icon="file-add" type="primary" onClick={this.showModal}>新建试卷</Button>
                 <Input
@@ -315,12 +315,40 @@ class ManageContainer extends React.Component {
             </span>
           </div>
         </div>
+<<<<<<< HEAD
         <ChoosePaperType visible={this.state.visible} hideModal={this.hideModal} />
+=======
+
+        {/* 新建试卷Modal */}
+        <Modal
+          title="选择出题方式"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          destroyOnClose={true}
+          width="600px"
+        >
+          <div className="chooseType">
+            <div>
+              <Icon type="edit" style={{fontSize:'35px', color:'#0692e1'}} />
+            </div>
+            <h3>固定试题</h3>
+            <p>所有考生的试题相同，试题的顺序可以固定，也可以打乱</p>
+          </div>
+          <div className="chooseType">
+            <div>
+              <Icon type="edit" style={{fontSize:'35px', color:'#04b2a2'}} />
+            </div>
+            <h3>随机试题</h3>
+            <p>设置试题抽取规则，随机生成试卷，</p>
+          </div>
+        </Modal>
+>>>>>>> master
       </div>
     );
   }
 }
- 
+
 
 export default class Manage extends React.Component {
   state = {
