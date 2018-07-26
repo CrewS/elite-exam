@@ -17,7 +17,7 @@
     margin-bottom: 20px;
   }
   .sidebar {
-    width: 208px;
+    width: 206px;
     left: 0;
     position: absolute;
     height: 540px;
@@ -41,11 +41,11 @@
     }
   }
   .course-name {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   .main {
     min-height: 540px;
-    padding: 17px 31px;
+    padding: 20px 30px;
     margin-left: 206px;
     box-sizing: border-box;
     border: 1px solid #e5e9ed;
@@ -54,7 +54,7 @@
   .total {
     border: 1px solid #e5e9ed;
     border-radius: 4px;
-    margin-top: 12px;
+    margin-top: 10px;
     .total-block {
       height: 38px;
       display: flex;
