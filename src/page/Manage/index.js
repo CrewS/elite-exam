@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Icon, Tooltip, Table, Input, Breadcrumb, Button, Pagination, Select, Modal } from 'antd';
+import React from 'react';
+import { Icon, Tooltip, Table, Input, Breadcrumb, Button, Pagination, Select } from 'antd';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -250,9 +250,9 @@ class ManageContainer extends React.Component {
                 </span>
               :
                 <span>
-                  <Icon type="edit" style={{fontSize:'16px', cursor: 'not-allowed'}} />
-                  <Icon type="copy" style={{fontSize:'16px', cursor: 'not-allowed', margin:'0 10px'}} />
-                  <Icon type="delete" style={{fontSize:'16px', cursor: 'not-allowed'}} />
+                  <Icon type="edit" style={{fontSize:'16px', cursor: 'not-allowed', color: '#AAB2BD'}} />
+                  <Icon type="copy" style={{fontSize:'16px', cursor: 'not-allowed', color: '#AAB2BD', margin:'0 10px'}} />
+                  <Icon type="delete" style={{fontSize:'16px', cursor: 'not-allowed', color: '#AAB2BD'}} />
                 </span>
             }
           </span>

@@ -120,21 +120,15 @@ body {
 }
 
 // 3. icon
-.dropboxfile{
-  .icon-blue, .icon-red{
-    position: relative;
-    top: 2px;
-  }
-}
 .icon-blue, .icon-red{
-  color: $title;
+  color: $font;
 }
 .icon-blue:hover{
-  color: $blue;
+  color: $blue !important;
   cursor: pointer;
 }
 .icon-red:hover{
-  color: #f5222d;
+  color: #f5222d !important;
   cursor: pointer;
 }
 .icon-table-grey{
@@ -213,6 +207,11 @@ body {
 
 .ant-table-tbody > tr.ant-table-row-hover > td, .ant-table-tbody > tr:hover > td, .ant-table-thead > tr.ant-table-row-hover > td, .ant-table-thead > tr:hover > td{
   color: $title
+}
+.ant-table-tbody > tr:hover{
+  .icon-blue, .icon-red, .text-link{
+    color:$title
+  }
 }
 
 // 6. progress进度条

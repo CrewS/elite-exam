@@ -1,0 +1,9 @@
+@import '../../default.scss';
+.text-link{
+  color: $font;
+  cursor: pointer;
+}
+.text-link:hover, .text-link:focus{
+  color: $blue !important;
+  text-decoration: none;
+}
