@@ -1,12 +1,218 @@
-import React, { Component } from 'react';
-import { Icon } from 'antd';
-import { Input,Button,Table,Breadcrumb } from 'antd';
+import React from 'react';
+import { Input,Button,Table,Breadcrumb,Tooltip,Icon} from 'antd';
+import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import './index.scss';
 import $ from "jquery";
 const { TextArea } = Input;
+
+
+function dragDirection(
+  dragIndex,
+  hoverIndex,
+  initialClientOffset,
+  clientOffset,
+  sourceClientOffset,
+) {
+  const hoverMiddleY = (initialClientOffset.y - sourceClientOffset.y) / 2;
+  const hoverClientY = clientOffset.y - sourceClientOffset.y;
+  if (dragIndex < hoverIndex && hoverClientY > hoverMiddleY) {
+    return 'downward';
+  }
+  if (dragIndex > hoverIndex && hoverClientY < hoverMiddleY) {
+    return 'upward';
+  }
+}
+
+class BodyRow extends React.Component {
+  render() {
+    const {
+      isOver,
+      connectDragSource,
+      connectDropTarget,
+      moveRow,
+      dragRow,
+      clientOffset,
+      sourceClientOffset,
+      initialClientOffset,
+      ...restProps
+    } = this.props;
+    const style = { ...restProps.style, cursor: 'move' };
+
+    let className = restProps.className;
+    if (isOver && initialClientOffset) {
+      const direction = dragDirection(
+        dragRow.index,
+        restProps.index,
+        initialClientOffset,
+        clientOffset,
+        sourceClientOffset
+      );
+      if (direction === 'downward') {
+        className += ' drop-over-downward';
+      }
+      if (direction === 'upward') {
+        className += ' drop-over-upward';
+      }
+    }
+
+    return connectDragSource(
+      connectDropTarget(
+        <tr
+          {...restProps}
+          className={className}
+          style={style}
+        />
+      )
+    );
+  }
+}
+
+const rowSource = {
+  beginDrag(props) {
+    return {
+      index: props.index,
+    };
+  },
+};
+
+const rowTarget = {
+  drop(props, monitor) {
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
+
+    // Don't replace items with themselves
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    // Time to actually perform the action
+    props.moveRow(dragIndex, hoverIndex);
+
+    // Note: we're mutating the monitor item here!
+    // Generally it's better to avoid mutations,
+    // but it's good here for the sake of performance
+    // to avoid expensive index searches.
+    monitor.getItem().index = hoverIndex;
+  },
+};
+
+const DragableBodyRow = DropTarget('row', rowTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  sourceClientOffset: monitor.getSourceClientOffset(),
+}))(
+  DragSource('row', rowSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    dragRow: monitor.getItem(),
+    clientOffset: monitor.getClientOffset(),
+    initialClientOffset: monitor.getInitialClientOffset(),
+  }))(BodyRow)
+);
+
+const columns = [
+  {
+    width:'8.2%',
+    title: '序号',
+    dataIndex: 'index'
+  },{
+    width:'67.4%',
+    title: '试题',
+    dataIndex: 'subjectdec'
+  },{
+    width:'8.2%',
+    title: '题型',
+    dataIndex: 'type'
+  },{
+    width:'8.6%',
+    title: '分值',
+    dataIndex: 'score',
+    render:(record)=>(
+      <div className="inputBox">
+        <div className="inputLeft">
+          <Input type="text" />
+        </div>
+        <div className="inputRight">
+          <div><Icon type="up" /></div>
+          <div><Icon type="down" /></div>
+        </div>
+      </div>
+    )
+  },{
+    width:'7.6%',
+    title: '操作',
+    dataIndex: 'operate',
+    render:(record)=>(
+      <Tooltip title="删除">
+        <Icon type="delete" className="icon-red" style={{fontSize:'16px'}} />
+      </Tooltip>
+    )
+  }
+];
+
+class DragSortingTable extends React.Component {
+  state = {
+    data: [{
+      key: '1',
+      index: '序号',
+      subjectdec: 32,
+      type: '1',
+    }, {
+      key: '2',
+      index: 'Jim Green',
+      subjectdec: 42,
+      type: '1',
+    }, {
+      key: '3',
+      index: 'Joe Black',
+      subjectdec: 32,
+      type: '1',
+    }],
+  }
+
+  components = {
+    body: {
+      row: DragableBodyRow,
+    },
+  }
+
+  moveRow = (dragIndex, hoverIndex) => {
+    const { data } = this.state;
+    const dragRow = data[dragIndex];
+
+    this.setState(
+      update(this.state, {
+        data: {
+          $splice: [[dragIndex, 1], [hoverIndex, 0, dragRow]],
+        },
+      }),
+    );
+  }
+
+  render() {
+    return (
+      <Table
+        columns={columns}
+        dataSource={this.state.data}
+        components={this.components}
+        pagination={false}
+        bordered
+        size="small"
+        onRow={(record, index) => ({
+          index,
+          moveRow: this.moveRow,
+        })}
+      />
+    );
+  }
+}
+
+const MoveTable = DragDropContext(HTML5Backend)(DragSortingTable);
+
 
 class EditContainer extends React.Component {
   state={
@@ -28,6 +234,7 @@ class EditContainer extends React.Component {
     this.setState({
       paperName:e.target.value
     })
+
   }
   //修改试卷说明
   onChangePaperIns=(e)=>{
@@ -35,63 +242,51 @@ class EditContainer extends React.Component {
       paperIns:e.target.value
     })
   }
+  //修改及格线数值
+  onChangePass=(e)=>{
+    this.setState({
+      paperpass:e.target.value || 1
+    })
+  }
+  //keyup事件
+  inputNumberPass=(e)=>{
+    let value = e.target.value;
+    value=value.replace("^(\\d|[1-9]\\d|100)$");
+    value =  value >= 100 ? 100 : value;
+    this.setState({
+      paperpass:value
+    })
+  }
+  //增加及格线数值
+  paperpassAdd=(value)=>{
+    value>=100 ? value=100 :
+    this.setState({
+      paperpass:value+=1
+    })
+  }
+  //减少及格线数值
+  paperpassReduce=(value)=>{
+    if(this.state.paperpass<=1){
+      this.setState({
+        paperpass:1
+      })
+    }
+    else{
+      this.setState({
+        paperpass:value-=1
+      })
+    }
+  }
+
+
 
   render() {
     const inputStyle={
       width:'468px'
     }
 
-
-    const columns = [{
-      title: 'Name',
-      dataIndex: 'name',
-      render: text => <a href="javascript:;">{text}</a>,
-    }, {
-      title: 'Cash Assets',
-      className: 'column-money',
-      dataIndex: 'money',
-    }, {
-      title: 'Address',
-      dataIndex: 'address',
-    }, {
-      title: 'Address',
-      dataIndex: 'address',
-      render: (text, record, index) => (
-        <span></span>
-      )
-    }];
-
-    const data = [{
-      key: '1',
-      name: 'John Brown',
-      money: '￥300,000.00',
-      address: 'New York No. 1 Lake Park',
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      money: '￥1,256,000.00',
-      address: 'London No. 1 Lake Park',
-    }, {
-      key: '3',
-      name: 'Joe Black',
-      money: '￥120,000.00',
-      address: 'Sidney No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      money: '￥120,000.00',
-      address: 'Sidney No. 1 Lake Park',
-    }];
-
-
-
-
-
-
-
     return (
-      <div style={{width:'100%',display:'flex',display:'-webkit-flex'}}>
+      <div className="displayFlx">
         <Sidebar/>
         <div className="text-right-left">
 
@@ -126,27 +321,19 @@ class EditContainer extends React.Component {
               <div style={{lineHeight:'14px'}}>试卷名称*</div>
               <div>
                 <TextArea placeholder="请输入试卷说明"
-                autosize={{ minRows: 2, maxRows: 6 }}
+                autosize={{ minRows: 4, maxRows: 6 }}
                 onChange={this.onChangePaperIns}
                 style={inputStyle}/>
               </div>
             </div>
             <div className="label-box">
-              <div style={{lineHeight:'14px'}}>试题列表</div>
+              <div style={{lineHeight:'32px'}}>试题列表</div>
               <div>
-
-
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  bordered
-                  pagination={false}
-                  title={()=><div>
-                              <Button type="primary">添加试题</Button>
-                              <Button type="primary" style={{marginLeft:'10px'}}>批量设置分值</Button>
-                            </div>
-                  }
-                />
+                <div style={{marginBottom:'10px'}}>
+                  <Button type="primary">添加试题</Button>
+                  <Button type="primary" style={{marginLeft:'10px'}}>批量设置分值</Button>
+                </div>
+                <MoveTable />
 
                 <div>
                   <div className="total">
@@ -172,15 +359,17 @@ class EditContainer extends React.Component {
                         <span style={{float: 'right'}}>%</span>
                           <div className="inputBox">
                             <div className="inputLeft">
-                              <Input value={this.state.paperpass} />
+
+                              <Input value={this.state.paperpass} type="text" onKeyUp={this.inputNumberPass} onChange={this.onChangePass}/>
                             </div>
                             <div className="inputRight">
-                              <div>1</div>
-                              <div>2</div>
+                              <div onClick={this.paperpassAdd.bind(this,this.state.paperpass)}><Icon type="up" /></div>
+                              <div onClick={this.paperpassReduce.bind(this,this.state.paperpass)}><Icon type="down" /></div>
                             </div>
                           </div>
-
                         </span>
+
+                        <span>（及格分60=总分100分*及格线60%）</span>
                       </div>
                     </div>
 
