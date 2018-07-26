@@ -3,14 +3,27 @@ import { Icon } from 'antd';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
+import ChoosePaperType from '../../components/ChoosePaperType';
 import './index.scss';
 import $ from "jquery";
 class HomeContainer extends React.Component { 
   state={ 
-
+    visible: false,
   }
 
   componentDidMount() {
+  }
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    })
+  }
+
+  hideModal = () =>{
+    this.setState({
+      visible: false,
+    })
   }
 
   render() {
@@ -19,7 +32,7 @@ class HomeContainer extends React.Component {
         <Sidebar active="home" />
         <div className="text-right-left home">
           <p style={{ margin: '10px 0 20px'}}>叶文洁，欢迎来到【公司名】考试管理系统，您可以在这里管理您的试卷和发布考试任务。</p>
-          <div className="home-create">
+          <div className="home-create" onClick={this.showModal}>
             <Icon type="edit" className="home-icon" style={{color:'#37c591'}}/>
             <div>我要创建试卷</div>
           </div>
@@ -60,6 +73,7 @@ class HomeContainer extends React.Component {
               <p>福克斯的弗兰克的酸辣粉</p>
             </div>
           </div>
+          <ChoosePaperType visible={this.state.visible} hideModal={this.hideModal} />
         </div>
       </div>
     );

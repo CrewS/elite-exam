@@ -1,21 +1,6 @@
-
-
-$blue: #0692e1;
-$red: #f5222d;
-$border: #E6E9ED;
-$font: #656D78;
-$title: #2E313C;
-$note: #AAB2BD;
-$blue_hover: #1da6f3;
-$blue_active: #1da6f3;
-
+@import './default.scss';
 @import './libs/antd.min.scss';
 @import "./libs/common.scss";
-/*
-$shallowblue: #e6f4fc;
-$grey: #101010;
-$shallowgrey: #eaeaea;
-*/
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -280,14 +265,6 @@ body {
 
 // @import "./select.scss";
 //题库
-$blue: #0692e1;
-$red: #f5222d;
-$border: #E6E9ED;
-$font: #656D78;
-$title: #2E313C;
-$note: #AAB2BD;
-$blue_hover: #1da6f3;
-$blue_active: #1da6f3;
 .edit-paper{ 
   font-size: 16px;
   color: $title;
