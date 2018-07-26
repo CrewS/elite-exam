@@ -315,35 +315,7 @@ class ManageContainer extends React.Component {
             </span>
           </div>
         </div>
-<<<<<<< HEAD
         <ChoosePaperType visible={this.state.visible} hideModal={this.hideModal} />
-=======
-
-        {/* 新建试卷Modal */}
-        <Modal
-          title="选择出题方式"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          destroyOnClose={true}
-          width="600px"
-        >
-          <div className="chooseType">
-            <div>
-              <Icon type="edit" style={{fontSize:'35px', color:'#0692e1'}} />
-            </div>
-            <h3>固定试题</h3>
-            <p>所有考生的试题相同，试题的顺序可以固定，也可以打乱</p>
-          </div>
-          <div className="chooseType">
-            <div>
-              <Icon type="edit" style={{fontSize:'35px', color:'#04b2a2'}} />
-            </div>
-            <h3>随机试题</h3>
-            <p>设置试题抽取规则，随机生成试卷，</p>
-          </div>
-        </Modal>
->>>>>>> master
       </div>
     );
   }
