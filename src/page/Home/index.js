@@ -28,7 +28,7 @@ class HomeContainer extends React.Component {
 
   render() {
     return (
-      <div style={{width:'100%',display:'flex',display:'-webkit-flex'}}>
+      <div className="displayFlx">
         <Sidebar active="home" />
         <div className="text-right-left home">
           <p style={{ margin: '10px 0 20px'}}>叶文洁，欢迎来到【公司名】考试管理系统，您可以在这里管理您的试卷和发布考试任务。</p>
