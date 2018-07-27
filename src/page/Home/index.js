@@ -6,8 +6,8 @@ import Sidebar from '../../components/Sidebar';
 import ChoosePaperType from '../../components/ChoosePaperType';
 import './index.scss';
 import $ from "jquery";
-class HomeContainer extends React.Component { 
-  state={ 
+class HomeContainer extends React.Component {
+  state={
     visible: false,
   }
 
@@ -81,7 +81,7 @@ class HomeContainer extends React.Component {
 
 
 }
- 
+
 
 export default class Home extends React.Component {
   state = {

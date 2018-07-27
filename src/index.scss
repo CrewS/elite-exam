@@ -264,26 +264,31 @@ body {
 
 // @import "./select.scss";
 //题库
-.edit-paper{ 
+.edit-paper{
   font-size: 16px;
   color: $title;
   padding-bottom: 8px;
   border-bottom: 1px solid $border;
 }
 
-.edit-box{ 
+.edit-box{
   margin-top: 38px;
-  .label-box{  
+  .label-box{
     margin-bottom: 18px;
     display: -webkit-flex;
     display: flex;
-    >div:first-child{ 
+    >div:first-child{
       width: 110px;
       text-align: left;
       line-height: 32px;
     }
-    >div:last-child{  
+    >div:last-child{
       flex: 1;
     }
   }
-}  
+}
+.displayFlx{
+  width:'100%';
+  display:'flex';
+  display:'-webkit-flex';
+}
