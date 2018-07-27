@@ -287,8 +287,18 @@ body {
     }
   }
 }
+
+
 .displayFlx{
-  width:'100%';
-  display:'flex';
-  display:'-webkit-flex';
+  width:100%;
+  display:flex;
+  display:-webkit-flex;
+}
+.text-link{
+  color: $font;
+  cursor: pointer;
+}
+.text-link:hover, .text-link:focus{
+  color: $blue !important;
+  text-decoration: none;
 }
