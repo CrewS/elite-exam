@@ -1,3 +1,5 @@
+@import '../../default.scss';
+
 // 首页
 $blue: #0692e1;
 $red: #f5222d;
@@ -13,23 +15,11 @@ $blue_active: #1da6f3;
   display:flex;
   display:-webkit-flex;
 }
-.chooseType{
-  display: inline-block;
-  width: 50%;
-  vertical-align: text-top;
-  text-align: center;
-  padding: 20px;
-  div{
-    width:90px;
-    height:90px;
-    border-radius: 45px;
-    background: #f5f7fa;
-    text-align: center;
-    line-height: 100px;
-    margin: 0 auto 20px;
-  }
-  h3{
-    font-size:16px;
-    margin-bottom: 5px;
-  }
+.text-link{
+  color: $font;
+  cursor: pointer;
+}
+.text-link:hover, .text-link:focus{
+  color: $blue !important;
+  text-decoration: none;
 }
